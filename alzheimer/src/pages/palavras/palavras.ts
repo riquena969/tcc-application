@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
+import { HttpClient } from '@angular/common/http';
 
 /**
  * Generated class for the PalavrasPage page.
@@ -22,21 +23,44 @@ import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angu
     public  tempoRestante;
     private timer;
 
-    constructor(public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController) {
-        this.palavras          = ['casa', 'mesa', 'gelo', 'blusa', 'jogo', 'bola'];
+    constructor(public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController, public http: HttpClient) {
         this.palavrasDigitadas = [];
 
-        this.palavraMatriz = this.palavras[Math.floor((Math.random() * this.palavras.length))].toUpperCase();
-        this.tempoRestante = 60;
+        new Promise(resolve => {
+            this.http.get('http://127.0.0.1/web/game-4/getPalavra.php').subscribe(data => {
+                console.log(data);
 
-        this.timer = setInterval(
-            () => {
-                this.tempoRestante--;
-                if (this.tempoRestante == 0) {
-                    clearInterval(this.timer);
-                    this.gameOver();
+                if (data.sucesso) {
+                    this.palavraMatriz = data.palavra.toUpperCase();
+                    this.tempoRestante = 60;
+
+                    this.timer = setInterval(
+                        () => {
+                            this.tempoRestante--;
+                            if (this.tempoRestante == 0) {
+                                clearInterval(this.timer);
+                                this.gameOver();
+                            }
+                        }, 1000);
+                } else {
+                    this.alertCtrl.create({
+                        title: 'Erro',
+                        subTitle: 'Falha ao estabelecer comunicação com o servidor',
+                        buttons: ['OK']
+                    }).present();
+                    navCtrl.popToRoot();
                 }
-            }, 1000);
+
+            }, err => {
+                this.alertCtrl.create({
+                    title: 'Erro',
+                    subTitle: 'Falha ao estabelecer comunicação com o servidor',
+                    buttons: ['OK']
+                }).present();
+                navCtrl.popToRoot();
+                console.log(err);
+            });
+        });
     }
 
     ionViewDidLoad() {
@@ -71,7 +95,7 @@ import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angu
     }
 
     private gameOver() {
-        let pontuacao;
+        let pontuacao = 0;
 
         pontuacao = this.palavrasDigitadas.reduce(
             (a, b) => {return {pontuacao: a.pontuacao + b.pontuacao}}
