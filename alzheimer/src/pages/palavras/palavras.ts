@@ -27,11 +27,9 @@ import { HttpClient } from '@angular/common/http';
         this.palavrasDigitadas = [];
 
         new Promise(resolve => {
-            this.http.get('http://127.0.0.1/web/game-4/getPalavra.php').subscribe(data => {
-                console.log(data);
-
-                if (data.sucesso) {
-                    this.palavraMatriz = data.palavra.toUpperCase();
+            this.http.get('http://127.0.0.1/web/game-4/getPalavra.php').subscribe((retornoPalavra: RetornoPalavra) => {
+                if (retornoPalavra.sucesso) {
+                    this.palavraMatriz = retornoPalavra.palavra.toUpperCase();
                     this.tempoRestante = 60;
 
                     this.timer = setInterval(
@@ -95,7 +93,7 @@ import { HttpClient } from '@angular/common/http';
     }
 
     private gameOver() {
-        let pontuacao = 0;
+        let pontuacao       = {pontuacao:0};
 
         pontuacao = this.palavrasDigitadas.reduce(
             (a, b) => {return {pontuacao: a.pontuacao + b.pontuacao}}
@@ -110,4 +108,9 @@ import { HttpClient } from '@angular/common/http';
         alert.present();
     }
 
+ }
+
+ interface RetornoPalavra {
+     sucesso: boolean,
+     palavra: string
  }
