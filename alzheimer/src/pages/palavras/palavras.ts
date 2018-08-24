@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController, ToastController } from 'ionic-angular';
 import { HttpClient } from '@angular/common/http';
 
 /**
@@ -23,7 +23,7 @@ import { HttpClient } from '@angular/common/http';
     public  tempoRestante;
     private timer;
 
-    constructor(public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController, public http: HttpClient) {
+    constructor(public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController, public http: HttpClient, private toastCtrl: ToastController) {
         this.palavrasDigitadas = [];
 
         new Promise(resolve => {
@@ -66,13 +66,29 @@ import { HttpClient } from '@angular/common/http';
     }
 
     public adicionarPalavra() {
-        if (this.palavraDigitada.toLowerCase().indexOf(this.palavraMatriz.charAt(0).toLowerCase()) == 0) {
-            this.palavrasDigitadas.push({
-                palavra:   this.palavraDigitada,
-                pontuacao: this.calculaPontos(this.palavraDigitada)
+        new Promise(resolve => {
+            this.http.get('http://127.0.0.1/web/game-4/verificaPalavra.php').subscribe((retorno: VerificaPalavra) => {
+                if (retorno.sucesso) {
+                    if (retorno.valida) {
+                        if (this.palavraDigitada.toLowerCase().indexOf(this.palavraMatriz.charAt(0).toLowerCase()) == 0) {
+                            this.palavrasDigitadas.push({
+                                palavra:   this.palavraDigitada,
+                                pontuacao: this.calculaPontos(this.palavraDigitada)
+                            });
+                            this.palavraDigitada = '';
+                        }
+                    } else {
+                        this.presentToast('Palavra inválida');
+                    }
+                } else {
+                    this.presentToast('Falha ao estabelecer comunicação com o servidor');
+                }
+
+            }, err => {
+                this.presentToast('Falha ao estabelecer comunicação com o servidor');
+                console.log(err);
             });
-            this.palavraDigitada = '';
-        }
+        });
     }
 
     private calculaPontos(palavra) {
@@ -108,9 +124,27 @@ import { HttpClient } from '@angular/common/http';
         alert.present();
     }
 
+    presentToast(mensagem) {
+        let toast = this.toastCtrl.create({
+            message: mensagem,
+            duration: 1000,
+            position: 'top'
+        });
+
+        toast.onDidDismiss(() => {
+            console.log('Dismissed toast');
+        });
+
+        toast.present();
+    }
+
  }
 
- interface RetornoPalavra {
-     sucesso: boolean,
-     palavra: string
- }
+interface RetornoPalavra {
+    sucesso: boolean,
+    palavra: string
+}
+interface VerificaPalavra {
+    sucesso: boolean,
+    valida: boolean
+}
