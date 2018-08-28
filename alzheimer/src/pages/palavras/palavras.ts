@@ -16,7 +16,6 @@ import { HttpClient } from '@angular/common/http';
  })
  export class PalavrasPage {
 
-    private palavras;
     public  palavraMatriz;
     private palavrasDigitadas;
     public  palavraDigitada;
@@ -67,7 +66,7 @@ import { HttpClient } from '@angular/common/http';
 
     public adicionarPalavra() {
         new Promise(resolve => {
-            this.http.get('http://127.0.0.1/web/game-4/verificaPalavra.php').subscribe((retorno: VerificaPalavra) => {
+            this.http.get('http://127.0.0.1/web/game-4/verificaPalavra.php?palavra=' + encodeURIComponent(this.palavraDigitada.toLowerCase())).subscribe((retorno: VerificaPalavra) => {
                 if (retorno.sucesso) {
                     if (retorno.valida) {
                         if (this.palavraDigitada.toLowerCase().indexOf(this.palavraMatriz.charAt(0).toLowerCase()) == 0) {
