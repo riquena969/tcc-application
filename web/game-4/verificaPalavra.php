@@ -8,7 +8,10 @@ require '../database.php';
 
 $database = new Database();
 
-$retorno = $database->select('SELECT palavra FROM palavras WHERE palavra = "' . addslashes($palavraDigitada) . '";');
+$palavraDigitada = str_replace(' ', '-', $palavraDigitada);
+$palavraDigitada = str_replace('%', '', $palavraDigitada);
+
+$retorno = $database->select('SELECT palavra FROM dicionario WHERE palavra = "' . addslashes($palavraDigitada) . '";');
 
 if ($retorno === false) {
 	die(json_encode(array(
