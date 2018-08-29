@@ -10,6 +10,8 @@ import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { PalavrasPage } from '../pages/palavras/palavras';
 
+import { ServiceComponent } from '../services/service.component';
+
 @NgModule({
   declarations: [
     MyApp,
@@ -30,6 +32,7 @@ import { PalavrasPage } from '../pages/palavras/palavras';
   providers: [
     StatusBar,
     SplashScreen,
+    ServiceComponent,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })

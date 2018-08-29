@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController, ToastController } from 'ionic-angular';
 import { HttpClient } from '@angular/common/http';
 
+import { ServiceComponent } from '../../services/service.component';
 /**
  * Generated class for the PalavrasPage page.
  *
@@ -22,11 +23,11 @@ import { HttpClient } from '@angular/common/http';
     public  tempoRestante;
     private timer;
 
-    constructor(public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController, public http: HttpClient, private toastCtrl: ToastController) {
+    constructor(public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController, public http: HttpClient, private toastCtrl: ToastController, public services: ServiceComponent) {
         this.palavrasDigitadas = [];
 
         new Promise(resolve => {
-            this.http.get('http://127.0.0.1/web/game-4/getPalavra.php').subscribe((retornoPalavra: RetornoPalavra) => {
+            this.http.get(this.services.getConfigs().url + 'game-4/getPalavra.php').subscribe((retornoPalavra: RetornoPalavra) => {
                 if (retornoPalavra.sucesso) {
                     this.palavraMatriz = retornoPalavra.palavra.toUpperCase();
                     this.tempoRestante = 60;
@@ -66,7 +67,7 @@ import { HttpClient } from '@angular/common/http';
 
     public adicionarPalavra() {
         new Promise(resolve => {
-            this.http.get('http://127.0.0.1/web/game-4/verificaPalavra.php?palavra=' + encodeURIComponent(this.palavraDigitada.toLowerCase())).subscribe((retorno: VerificaPalavra) => {
+            this.http.get(this.services.getConfigs().url + 'game-4/verificaPalavra.php?palavra=' + encodeURIComponent(this.palavraDigitada.toLowerCase())).subscribe((retorno: VerificaPalavra) => {
                 if (retorno.sucesso) {
                     if (retorno.valida) {
                         if (this.palavraDigitada.toLowerCase().indexOf(this.palavraMatriz.charAt(0).toLowerCase()) == 0) {
