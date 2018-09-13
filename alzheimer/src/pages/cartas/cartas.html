@@ -7,7 +7,7 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>cartas</ion-title>
+    <ion-title>Jogo das Cartas</ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -17,10 +17,10 @@
 
 	<ion-grid>
 		<ion-row justify-content-center>
-			<ion-img src="{{ cartaAtual }}"></ion-img>
+			<ion-img src="{{ cartaAtual }}" height="250" width="200"></ion-img>
 		</ion-row>
-		<ion-row justify-content-center *ngIf="jogoIniciado">
-			{{ perguntas[perguntaEscolhida] }}
+		<br>
+		<ion-row justify-content-center *ngIf="jogoIniciado" [innerHTML]="perguntas[perguntaEscolhida]">
 		</ion-row>
 		<ion-row *ngIf="jogoIniciado">
 			<ion-col>

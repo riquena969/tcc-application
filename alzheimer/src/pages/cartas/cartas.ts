@@ -30,13 +30,13 @@ export class CartasPage {
 
 	public perguntaEscolhida = 0;
 	public perguntas = [
-		"A carta atual é da mesma cor que a carta anterior.",
-		"A carta atual é de cor diferente que a carta anterior.",
-		"O naipe da carta atual é o mesmo que o da carta anterior.",
-		"O naipe da carta atual é diferente que o da carta anterior.",
-		"O número da carta atual é igual ao da carta anterior.",
-		"O número da carta atual é maior que o da carta anterior.",
-		"O número da carta atual é menor que o da carta anterior."
+		"A carta atual é da &nbsp;<b><u>mesma cor</u></b>&nbsp; que a carta anterior.",
+		"A carta atual é de &nbsp;<b><u>cor diferente</u></b>&nbsp; que a carta anterior.",
+		"O &nbsp;<b><u>naipe</u></b>&nbsp; da carta atual é o &nbsp;<b><u>mesmo</u></b>&nbsp; que o da carta anterior.",
+		"O &nbsp;<b><u>naipe</u></b>&nbsp; da carta atual é &nbsp;<b><u>diferente</u></b>&nbsp; que o da carta anterior.",
+		"O &nbsp;<b><u>número</u></b>&nbsp; da carta atual é &nbsp;<b><u>igual</u></b>&nbsp; ao da carta anterior.",
+		"O &nbsp;<b><u>número</u></b>&nbsp; da carta atual é &nbsp;<b><u>maior</u></b>&nbsp; que o da carta anterior.",
+		"O &nbsp;<b><u>número</u></b>&nbsp; da carta atual é &nbsp;<b><u>menor</u></b>&nbsp; que o da carta anterior."
 	];
 
 	public cartaAtual    = "";
@@ -64,7 +64,7 @@ export class CartasPage {
   }
 
   public contaTempoMemorizarCarta() {
-  	this.tempoRestante = 2;
+  	this.tempoRestante = 5;
   	this.tempoRestanteInterval = setInterval(() => {
   		this.tempoRestante--;
 
