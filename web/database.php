@@ -9,6 +9,8 @@ class Database {
 		if ($this->conn->connect_error) {
 		    return false;
 		}
+
+		$this->conn->query('SET NAMES utf8');
 		return true;
 	}
 

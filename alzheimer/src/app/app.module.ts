@@ -9,6 +9,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { PalavrasPage } from '../pages/palavras/palavras';
+import { CartasPage } from '../pages/cartas/cartas';
 
 import { ServiceComponent } from '../services/service.component';
 
@@ -16,7 +17,8 @@ import { ServiceComponent } from '../services/service.component';
   declarations: [
     MyApp,
     HomePage,
-    PalavrasPage
+    PalavrasPage,
+    CartasPage
   ],
   imports: [
     BrowserModule,
@@ -27,7 +29,8 @@ import { ServiceComponent } from '../services/service.component';
   entryComponents: [
     MyApp,
     HomePage,
-    PalavrasPage
+    PalavrasPage,
+    CartasPage
   ],
   providers: [
     StatusBar,
