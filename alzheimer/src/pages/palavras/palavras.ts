@@ -117,9 +117,11 @@ import { ServiceComponent } from '../../services/service.component';
     private gameOver() {
         let pontuacao       = {pontuacao:0};
 
-        pontuacao = this.palavrasDigitadas.reduce(
-            (a, b) => {return {pontuacao: a.pontuacao + b.pontuacao}}
-        );
+        if (this.palavrasDigitadas.length > 0) {
+            pontuacao = this.palavrasDigitadas.reduce(
+                (a, b) => {return {pontuacao: a.pontuacao + b.pontuacao}}
+            );
+        }
 
         const alert = this.alertCtrl.create({
           title: 'Tempo esgotado!',
