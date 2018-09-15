@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
 
 /**
  * Generated class for the CartasPage page.
@@ -26,7 +26,7 @@ export class CartasPage {
 	private valoresEscolhido;
 	private valores      = ["a","2","3","4","5","6","7","8","9","10","j","q","k"];
 	public  jogoIniciado = false;
-	public  pontuacao    = 0;
+  private pontuacao = {acertos:0, erros:0};
 
 	public perguntaEscolhida = 0;
 	public perguntas = [
@@ -43,7 +43,7 @@ export class CartasPage {
 	public tempoRestante = 0;
 	private tempoRestanteInterval;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController) {
   	this.alteraCartaAtual(true);
   }
 
@@ -69,10 +69,17 @@ export class CartasPage {
   		this.tempoRestante--;
 
   		if (this.tempoRestante == 0) {
-  			clearInterval(this.tempoRestanteInterval);
 
-  			this.alteraCartaAtual();
-  			this.jogoIniciado = true;
+        if (this.jogoIniciado) {
+  			  clearInterval(this.tempoRestanteInterval);
+
+          this.gameOver();
+        } else {
+    			this.alteraCartaAtual();
+    			this.jogoIniciado = true;
+
+          this.tempoRestante = 60;
+        }
   			return;
   		}
   	}, 1000);
@@ -81,46 +88,25 @@ export class CartasPage {
   public respondePergunta(resposta) {
   	switch (this.perguntaEscolhida) {
   		case 0: // A carta atual é da mesma cor que a carta anterior.
-  			this.pontuacao +=
-  				((this.naipes[this.naipesEscolhido].cor == this.naipes[this.naipesAntigoEscolhido].cor) == resposta)
-  					? 1
-  					: 0;
+  			this.novaTentativa((this.naipes[this.naipesEscolhido].cor == this.naipes[this.naipesAntigoEscolhido].cor) == resposta);
   			break;
   		case 1: // A carta atual é de cor diferente que a carta anterior.
-  			this.pontuacao +=
-  				((this.naipes[this.naipesEscolhido].cor != this.naipes[this.naipesAntigoEscolhido].cor) == resposta)
-  					? 1
-  					: 0;
+  			this.novaTentativa((this.naipes[this.naipesEscolhido].cor != this.naipes[this.naipesAntigoEscolhido].cor) == resposta);
   			break;
   		case 2: // O naipe da carta atual é o mesmo que o da carta anterior.
-  			this.pontuacao +=
-  				((this.naipes[this.naipesEscolhido].nome == this.naipes[this.naipesAntigoEscolhido].nome) == resposta)
-  					? 1
-  					: 0;
+  			this.novaTentativa((this.naipes[this.naipesEscolhido].nome == this.naipes[this.naipesAntigoEscolhido].nome) == resposta);
   			break;
   		case 3: // O naipe da carta atual é diferente que o da carta anterior.
-  			this.pontuacao +=
-  				((this.naipes[this.naipesEscolhido].nome != this.naipes[this.naipesAntigoEscolhido].nome) == resposta)
-  					? 1
-  					: 0;
+  			this.novaTentativa((this.naipes[this.naipesEscolhido].nome != this.naipes[this.naipesAntigoEscolhido].nome) == resposta);
   			break;
   		case 4: // O número da carta atual é igual ao da carta anterior.
-  			this.pontuacao +=
-  				((this.valoresEscolhido == this.valoresAntigoEscolhido) == resposta)
-  					? 1
-  					: 0;
+  			this.novaTentativa((this.valoresEscolhido == this.valoresAntigoEscolhido) == resposta);
   			break;
   		case 5: // O número da carta atual é maior que o da carta anterior.
-  			this.pontuacao +=
-  				((this.valoresEscolhido > this.valoresAntigoEscolhido) == resposta)
-  					? 1
-  					: 0;
+  			this.novaTentativa((this.valoresEscolhido > this.valoresAntigoEscolhido) == resposta);
   			break;
   		case 6: // O número da carta atual é menor que o da carta anterior
-  			this.pontuacao +=
-  				((this.valoresEscolhido < this.valoresAntigoEscolhido) == resposta)
-  					? 1
-  					: 0;
+  			this.novaTentativa((this.valoresEscolhido < this.valoresAntigoEscolhido) == resposta);
   			break;
 
   		default:
@@ -129,6 +115,30 @@ export class CartasPage {
   	}
 
   	this.alteraCartaAtual();
+  }
+
+  private novaTentativa(respostaCorreta) {
+    if (respostaCorreta) {
+      this.pontuacao.acertos++;
+    } else {
+      this.pontuacao.erros++;
+    }
+  }
+
+  private gameOver() {
+    let pontuacaoFinal = (this.pontuacao.acertos * 100) - (this.pontuacao.erros * 60);
+    let eficiencia     = Math.round(this.pontuacao.acertos/(this.pontuacao.acertos+this.pontuacao.erros) * 1000)/10;
+
+    const alert = this.alertCtrl.create({
+      title: 'Tempo esgotado!',
+      subTitle: `Você conseguiu ${pontuacaoFinal} pontos!\n\n
+                 Quantidade de Acertos: ${this.pontuacao.acertos}\n
+                 Quantidade de Erros: ${this.pontuacao.erros}\n
+                 Percentual de Eficiência: ${eficiencia}`,
+      buttons: ['OK']
+    });
+
+    alert.present();
   }
 
   ionViewDidLoad() {
