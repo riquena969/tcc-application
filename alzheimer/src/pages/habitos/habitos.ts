@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
+import { HttpClient } from '@angular/common/http';
+
+import { ServiceComponent } from '../../services/service.component';
 
 /**
  * Generated class for the HabitosPage page.
@@ -18,21 +21,39 @@ export class HabitosPage {
 	private itensHabito;
 	public  tempo;
 	private tempoController;
+	private habito;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController) {
-  	this.itensHabito = [
-		{nome: 'item 1', selected: false, indice: null, indiceCorreto: 1},
-		{nome: 'item 2', selected: false, indice: null, indiceCorreto: 2},
-		{nome: 'item 3', selected: false, indice: null, indiceCorreto: 3},
-		{nome: 'item 4', selected: false, indice: null, indiceCorreto: 4},
-		{nome: 'item 5', selected: false, indice: null, indiceCorreto: 5}
-	];
+  constructor(public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController, public http: HttpClient, public services: ServiceComponent) {
+  	        new Promise(resolve => {
+            this.http.get(this.services.getConfigs().url + 'game-3/getHabitos.php').subscribe((retorno: DadosHabito) => {
+                if (retorno.sucesso) {
+                  	this.itensHabito = retorno.acoes;
+                  	this.habito      = retorno.habito;
 
-	this.tempo = 0;
+					this.tempo = 0;
 
-	this.tempoController = setInterval(() => {
-		this.tempo++;
-	}, 1000);
+					this.tempoController = setInterval(() => {
+						this.tempo++;
+					}, 1000);
+                } else {
+                    this.alertCtrl.create({
+                        title: 'Erro',
+                        subTitle: 'Falha ao estabelecer comunicação com o servidor',
+                        buttons: ['OK']
+                    }).present();
+                    navCtrl.popToRoot();
+                }
+
+            }, err => {
+                this.alertCtrl.create({
+                    title: 'Erro',
+                    subTitle: 'Falha ao estabelecer comunicação com o servidor',
+                    buttons: ['OK']
+                }).present();
+                navCtrl.popToRoot();
+                console.log(err);
+            });
+        });
   }
 
   public itemSelecionado(item) {
@@ -80,12 +101,12 @@ export class HabitosPage {
   private gameOver() {
   	clearInterval(this.tempoController);
 
-  	let tempoMedio = Math.round(this.itensHabito.length/this.tempo);
+  	let tempoMedio = Math.round(this.tempo/this.itensHabito.length);
 
 	const alert = this.alertCtrl.create({
 		title: 'Tempo esgotado!',
 		subTitle: `Tempo gasto: ${this.tempo} segundos!\n
-		Velocidade média: ${tempoMedio} ${tempoMedio != 1 ? 'itens' : 'item'}/seg.`,
+		Velocidade média: ${tempoMedio} seg/item.`,
 		buttons: ['OK']
 	});
 
@@ -96,4 +117,10 @@ export class HabitosPage {
     console.log('ionViewDidLoad HabitosPage');
   }
 
+}
+
+interface DadosHabito {
+    sucesso: boolean,
+    habito: string,
+    acoes: {}
 }

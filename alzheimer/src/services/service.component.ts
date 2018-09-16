@@ -6,7 +6,7 @@ export class ServiceComponent {
 
   public getConfigs() {
     return {
-        'url': 'https://devoriginal.com/tcc/'
+        'url': 'http://127.0.0.1/alzheimer/'
     };
   }
 }
