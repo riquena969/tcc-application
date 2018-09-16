@@ -10,6 +10,7 @@ import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { PalavrasPage } from '../pages/palavras/palavras';
 import { CartasPage } from '../pages/cartas/cartas';
+import { HabitosPage } from '../pages/habitos/habitos';
 
 import { ServiceComponent } from '../services/service.component';
 
@@ -18,7 +19,8 @@ import { ServiceComponent } from '../services/service.component';
     MyApp,
     HomePage,
     PalavrasPage,
-    CartasPage
+    CartasPage,
+    HabitosPage
   ],
   imports: [
     BrowserModule,
@@ -30,7 +32,8 @@ import { ServiceComponent } from '../services/service.component';
     MyApp,
     HomePage,
     PalavrasPage,
-    CartasPage
+    CartasPage,
+    HabitosPage
   ],
   providers: [
     StatusBar,
