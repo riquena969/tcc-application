@@ -1,0 +1,33 @@
+<ion-header>
+
+    <ion-navbar>
+        <ion-title>Jogo do Labirinto</ion-title>
+    </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+    <ion-grid>
+        <ion-row *ngFor="let row of rows">
+            <ion-col
+                *ngFor="let col of row"
+                class="cellBorder"
+                [ngClass]="
+                    jogoIniciado ? (col.checked || col.end ? 'bg-green' : 'bg-purple') :
+                    (col.danger ? 'bg-red' : (col.checked || col.end ? 'bg-green' : 'bg-purple'))
+                "
+                (click)="tentativaUsuario(col)">
+                <br>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+</ion-content>
+
+<ion-footer>
+    <ion-toolbar>
+        <ion-row justify-content-center>
+            {{ timer }} segundos
+        </ion-row>
+    </ion-toolbar>
+</ion-footer>

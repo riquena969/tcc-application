@@ -11,6 +11,7 @@ import { HomePage } from '../pages/home/home';
 import { PalavrasPage } from '../pages/palavras/palavras';
 import { CartasPage } from '../pages/cartas/cartas';
 import { HabitosPage } from '../pages/habitos/habitos';
+import { LabirintoPage } from '../pages/labirinto/labirinto';
 
 import { ServiceComponent } from '../services/service.component';
 
@@ -20,7 +21,8 @@ import { ServiceComponent } from '../services/service.component';
     HomePage,
     PalavrasPage,
     CartasPage,
-    HabitosPage
+    HabitosPage,
+    LabirintoPage
   ],
   imports: [
     BrowserModule,
@@ -33,7 +35,8 @@ import { ServiceComponent } from '../services/service.component';
     HomePage,
     PalavrasPage,
     CartasPage,
-    HabitosPage
+    HabitosPage,
+    LabirintoPage
   ],
   providers: [
     StatusBar,

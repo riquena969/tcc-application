@@ -1,0 +1,15 @@
+.bg-green {
+    background-color: #339900
+}
+
+.bg-purple {
+    background-color: #990099
+}
+
+.bg-red {
+    background-color: #cc0000
+}
+
+.cellBorder {
+    border: 1px solid #AAAAAA;
+}
