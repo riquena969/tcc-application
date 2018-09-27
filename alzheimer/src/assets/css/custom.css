@@ -13,3 +13,7 @@
 .cellBorder {
     border: 1px solid #AAAAAA;
 }
+
+.iconBigger {
+    font-size: 2em;
+}

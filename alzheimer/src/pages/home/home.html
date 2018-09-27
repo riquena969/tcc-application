@@ -1,25 +1,17 @@
 <ion-header>
-  <ion-navbar>
-    <ion-title>
-      Prevenção do Alzheimer
-    </ion-title>
-  </ion-navbar>
+    <ion-navbar>
+        <ion-title>
+            Prevenção do Alzheimer
+            <ion-icon float-right name="information-circle" [navPush]="pushPageAbout"></ion-icon>
+        </ion-title>
+    </ion-navbar>
 </ion-header>
 
 <ion-content padding>
-  <button ion-button block [navPush]="pushPageCartas">Jogo das Cartas</button>
-  <button ion-button block [navPush]="pushPageLabirinto">Jogo do Labirinto</button>
-  <button ion-button block [navPush]="pushPageHabitos">Jogo dos Hábitos</button>
-  <button ion-button block [navPush]="pushPage">Jogo das Palavras</button>
 
-  
+    <button ion-button block [navPush]="pushPageCartas">Jogo das Cartas</button>
+    <button ion-button block [navPush]="pushPageLabirinto">Jogo do Labirinto</button>
+    <button ion-button block [navPush]="pushPageHabitos">Jogo dos Hábitos</button>
+    <button ion-button block [navPush]="pushPage">Jogo das Palavras</button>
 </ion-content>
 
-
-<ion-footer>
-    <ion-toolbar>
-        <ion-row justify-content-center>
-            <a href="https://github.com/riquena969/tcc-application" target="_blank">Código Fonte do Projeto</a>
-        </ion-row>
-    </ion-toolbar>
-</ion-footer>
