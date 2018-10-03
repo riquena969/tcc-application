@@ -6,7 +6,13 @@ require '../database.php';
 
 $database = new Database();
 
-$retorno = $database->select('SELECT * FROM pontuacoes_labirinto ORDER BY `data` DESC;');
+$retorno = $database->select('
+    SELECT tempo,
+           velocidade_media,
+           tamanho_caminho,
+           DATE_FORMAT(`data`, "%d/%m/%Y %H:%i:%s") AS "data"
+    FROM   pontuacoes_labirinto
+    ORDER  BY `data` DESC;');
 
 if ($retorno === false) {
     die(json_encode(array(

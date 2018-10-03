@@ -14,6 +14,7 @@ import { HabitosPage } from '../pages/habitos/habitos';
 import { LabirintoPage } from '../pages/labirinto/labirinto';
 import { AboutPage } from '../pages/about/about';
 import { CartasHistoricoPage } from '../pages/cartas-historico/cartas-historico';
+import { LabirintoHistoricoPage } from '../pages/labirinto-historico/labirinto-historico';
 
 import { ServiceComponent } from '../services/service.component';
 
@@ -26,7 +27,8 @@ import { ServiceComponent } from '../services/service.component';
     HabitosPage,
     LabirintoPage,
     AboutPage,
-    CartasHistoricoPage
+    CartasHistoricoPage,
+    LabirintoHistoricoPage
   ],
   imports: [
     BrowserModule,
@@ -42,7 +44,8 @@ import { ServiceComponent } from '../services/service.component';
     HabitosPage,
     LabirintoPage,
     AboutPage,
-    CartasHistoricoPage
+    CartasHistoricoPage,
+    LabirintoHistoricoPage
   ],
   providers: [
     StatusBar,
