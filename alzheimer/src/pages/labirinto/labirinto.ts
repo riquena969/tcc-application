@@ -9,6 +9,14 @@ import {
     AlertController
 } from 'ionic-angular';
 
+import {
+    HttpClient
+} from '@angular/common/http';
+
+import {
+    ServiceComponent
+} from '../../services/service.component';
+
 @IonicPage()
 @Component({
     selector: 'page-labirinto',
@@ -23,7 +31,7 @@ export class LabirintoPage {
     public interval;
     public jogoIniciado = false;
 
-    constructor(public navCtrl: NavController, public navParams: NavParams, private toastCtrl: ToastController, public alertCtrl: AlertController) {
+    constructor(public navCtrl: NavController, public navParams: NavParams, private toastCtrl: ToastController, public alertCtrl: AlertController, public http: HttpClient, public services: ServiceComponent) {
         for (var r = 0; r < 12; r++) {
             this.rows.push([]);
             for (var c = 0; c < 5; c++) {
@@ -134,6 +142,18 @@ export class LabirintoPage {
             }
         }
 
+        let url = this.services.getConfigs().url + 'game-2/setScore.php?tempo=' + this.timer +
+                                                                       '&velocidade_media=' + tempoMedio +
+                                                                       '&eficiencia=' + (100 - ((erros/this.tentativas.length) * 100)) +
+                                                                       '&cliques=' + this.quantidadeTentativas +
+                                                                       '&tamanho_caminho=' + this.tentativas.length;
+        new Promise(resolve => {
+            this.http.get(url).subscribe((retorno: RetornoSetScore) => {
+            }, err => {
+                console.log(err);
+            });
+        });
+
         const alert = this.alertCtrl.create({
             title: 'Tempo esgotado!',
             subTitle: `Tempo gasto: ${this.timer} segundos!\n
@@ -159,4 +179,8 @@ class Cell {
         this.x = x;
         this.y = y;
     }
+}
+
+interface RetornoSetScore {
+    sucesso: boolean
 }
