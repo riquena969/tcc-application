@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { PalavrasPage } from '../palavras/palavras';
-import { CartasPage } from '../cartas/cartas';
+import { CartasHistoricoPage } from '../cartas-historico/cartas-historico';
 import { HabitosPage } from '../habitos/habitos';
 import { LabirintoPage } from '../labirinto/labirinto';
 import { AboutPage } from '../about/about';
@@ -17,11 +17,11 @@ export class HomePage {
   pushPageLabirinto: any;
   pushPageAbout: any;
 
-  public pages = [CartasPage, LabirintoPage, HabitosPage, PalavrasPage];
+  public pages = [CartasHistoricoPage, LabirintoPage, HabitosPage, PalavrasPage];
 
   constructor(public navCtrl: NavController) {
   	this.pushPage          = PalavrasPage;
-  	this.pushPageCartas    = CartasPage;
+  	this.pushPageCartas    = CartasHistoricoPage;
     this.pushPageHabitos   = HabitosPage;
     this.pushPageLabirinto = LabirintoPage;
   	this.pushPageAbout     = AboutPage;
