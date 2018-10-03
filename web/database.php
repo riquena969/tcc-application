@@ -30,4 +30,17 @@ class Database {
 
 		return $return;
 	}
+
+	public function insert($query) {
+		if (!$this->connect()) return false;
+
+		$return =
+			$this->conn->query($query) === TRUE ?
+			    $this->conn->insert_id :
+			    false;
+
+		$this->conn->close();
+
+		return $return;
+	}
 }
