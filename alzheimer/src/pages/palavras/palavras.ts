@@ -123,6 +123,13 @@ import { ServiceComponent } from '../../services/service.component';
             );
         }
 
+        let url = this.services.getConfigs().url + 'game-4/setScore.php?pontuacao=' + pontuacao.pontuacao;
+        new Promise(resolve => {
+            this.http.get(url).subscribe((retorno: RetornoSetScore) => {
+            }, err => {
+                console.log(err);
+            });
+        });
         const alert = this.alertCtrl.create({
           title: 'Tempo esgotado!',
           subTitle: `Você conseguiu ${pontuacao.pontuacao} pontos!`,
@@ -155,4 +162,7 @@ interface RetornoPalavra {
 interface VerificaPalavra {
     sucesso: boolean,
     valida: boolean
+}
+interface RetornoSetScore {
+    sucesso: boolean
 }
