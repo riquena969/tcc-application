@@ -4,7 +4,7 @@ class Database {
 	var $conn;
 
 	public function connect() {
-		$this->conn = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+		$this->conn = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME, DB_PORT);
 
 		if ($this->conn->connect_error) {
 		    return false;
