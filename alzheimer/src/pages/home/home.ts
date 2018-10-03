@@ -4,6 +4,7 @@ import { PalavrasPage } from '../palavras/palavras';
 import { CartasPage } from '../cartas/cartas';
 import { CartasHistoricoPage } from '../cartas-historico/cartas-historico';
 import { LabirintoHistoricoPage } from '../labirinto-historico/labirinto-historico';
+import { HabitosHistoricoPage } from '../habitos-historico/habitos-historico';
 import { HabitosPage } from '../habitos/habitos';
 import { LabirintoPage } from '../labirinto/labirinto';
 import { AboutPage } from '../about/about';
@@ -24,8 +25,8 @@ export class HomePage {
   constructor(public navCtrl: NavController) {
   	this.pushPage          = PalavrasPage;
   	this.pushPageCartas    = CartasHistoricoPage;
-    this.pushPageHabitos   = HabitosPage;
     this.pushPageLabirinto = LabirintoHistoricoPage;
+    this.pushPageHabitos   = HabitosHistoricoPage;
   	this.pushPageAbout     = AboutPage;
   }
 
