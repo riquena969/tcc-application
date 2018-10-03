@@ -16,12 +16,20 @@ export class HomePage {
   pushPageHabitos: any;
   pushPageLabirinto: any;
   pushPageAbout: any;
+
+  public pages = [CartasPage, LabirintoPage, HabitosPage, PalavrasPage];
+
   constructor(public navCtrl: NavController) {
-  	this.pushPage = PalavrasPage;
-  	this.pushPageCartas = CartasPage;
-    this.pushPageHabitos = HabitosPage;
+  	this.pushPage          = PalavrasPage;
+  	this.pushPageCartas    = CartasPage;
+    this.pushPageHabitos   = HabitosPage;
     this.pushPageLabirinto = LabirintoPage;
-  	this.pushPageAbout = AboutPage;
+  	this.pushPageAbout     = AboutPage;
+  }
+
+  public gameStart() {
+    let game = Math.floor((Math.random() * 4));
+    this.navCtrl.push(this.pages[game]);
   }
 
 }

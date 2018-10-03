@@ -21,14 +21,12 @@ export class HabitosPage {
 	private itensHabito;
 	public  tempo;
 	private tempoController;
-	private habito;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController, public http: HttpClient, public services: ServiceComponent) {
   	        new Promise(resolve => {
             this.http.get(this.services.getConfigs().url + 'game-3/getHabitos.php').subscribe((retorno: DadosHabito) => {
                 if (retorno.sucesso) {
                   	this.itensHabito = retorno.acoes;
-                  	this.habito      = retorno.habito;
 
 					this.tempo = 0;
 

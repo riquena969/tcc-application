@@ -83,12 +83,12 @@ export class LabirintoPage {
         if (cell.checked) {
             let posicaoCelula = 0; // Armazena a posição da célula no array para set utilizada para remover os itens do array de tentativas
 
-            for (var i = 0; i < this.tentativas.length; ++i) {
+            for (let i = 0; i < this.tentativas.length; ++i) {
                 if (this.tentativas[i] == cell) {
                     posicaoCelula = i;
                 }
             }
-            for (var i = this.tentativas.length - 1; i >= posicaoCelula; i--) {
+            for (let i = this.tentativas.length - 1; i >= posicaoCelula; i--) {
                 this.rows[this.tentativas[i].x][this.tentativas[i].y].checked = false;
                 this.tentativas.splice(i, 1);
             }

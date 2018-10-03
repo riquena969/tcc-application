@@ -23,7 +23,6 @@ import { ServiceComponent } from '../../services/service.component';
     public  tempoRestante;
     private timer;
     private pesoLetra;
-    private pesoAdicional;
 
     constructor(public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController, public http: HttpClient, private toastCtrl: ToastController, public services: ServiceComponent) {
         this.palavrasDigitadas = [];
@@ -34,7 +33,6 @@ import { ServiceComponent } from '../../services/service.component';
                     this.palavraMatriz = retornoPalavra.palavra.toUpperCase();
 
                     this.pesoLetra     = Math.round(100 / this.palavraMatriz.length);
-                    this.pesoAdicional = Math.round(100 / this.palavraMatriz.length / 100);
 
                     this.tempoRestante = 60;
 
