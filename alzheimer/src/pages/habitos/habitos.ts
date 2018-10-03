@@ -103,6 +103,14 @@ export class HabitosPage {
 
   	let tempoMedio = Math.round(this.tempo/this.itensHabito.length);
 
+	let url = this.services.getConfigs().url + 'game-3/setScore.php?tempo=' + this.tempo +
+																	'&velocidade_media=' + tempoMedio;
+	new Promise(resolve => {
+		this.http.get(url).subscribe((retorno: RetornoSetScore) => {
+		}, err => {
+			console.log(err);
+		});
+	});
 	const alert = this.alertCtrl.create({
 		title: 'Tempo esgotado!',
 		subTitle: `Tempo gasto: ${this.tempo} segundos!\n
@@ -123,4 +131,8 @@ interface DadosHabito {
     sucesso: boolean,
     habito: string,
     acoes: {}
+}
+
+interface RetornoSetScore {
+    sucesso: boolean
 }
