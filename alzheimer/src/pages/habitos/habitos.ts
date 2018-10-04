@@ -130,6 +130,10 @@ export class HabitosPage {
 	});
 
 	alert.present();
+
+	alert.onDidDismiss(() => {
+		this.navCtrl.popToRoot();
+	});
   }
 
   ionViewDidLoad() {

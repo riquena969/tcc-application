@@ -135,6 +135,10 @@ import { ServiceComponent } from '../../services/service.component';
         });
 
         alert.present();
+
+        alert.onDidDismiss(() => {
+            this.navCtrl.popToRoot();
+        });
     }
 
     presentToast(mensagem) {

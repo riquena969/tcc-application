@@ -159,6 +159,10 @@ export class CartasPage {
     });
 
     alert.present();
+
+    alert.onDidDismiss(() => {
+        this.navCtrl.popToRoot();
+    });
   }
 
   ionViewDidLoad() {

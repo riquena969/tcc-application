@@ -163,6 +163,10 @@ export class LabirintoPage {
         });
 
         alert.present();
+
+        alert.onDidDismiss(() => {
+            this.navCtrl.popToRoot();
+        });
     }
 
 
