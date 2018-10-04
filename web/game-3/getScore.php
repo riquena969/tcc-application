@@ -9,6 +9,7 @@ $database = new Database();
 $retorno = $database->select('
     SELECT tempo,
            velocidade_media,
+           eficiencia,
            DATE_FORMAT(`data`, "%d/%m/%Y %H:%i:%s") AS "data"
     FROM   pontuacoes_habitos
     ORDER  BY `data` DESC;');
