@@ -9,7 +9,7 @@
 
 <ion-content padding>
 
-    <button ion-button block (click)="gameStart()">Iniciar jogo</button>
+    <button ion-button block [navPush]="pushPageTutorial">Iniciar jogo</button>
 
     <ion-img src="assets/imgs/icons/app-01.png" [navPush]="pushPageCartas" style="width:24%;height:19%"></ion-img>
     <ion-img src="assets/imgs/icons/app-02.png" [navPush]="pushPageLabirinto" style="width:24%;height:19%"></ion-img>

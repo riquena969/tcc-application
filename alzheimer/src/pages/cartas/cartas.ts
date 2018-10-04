@@ -126,6 +126,12 @@ export class CartasPage {
     } else {
       this.pontuacao.erros++;
     }
+
+    if (this.pontuacao.acertos + this.pontuacao.erros == 10) {
+      clearInterval(this.tempoRestanteInterval);
+
+      this.gameOver();
+    }
   }
 
   private gameOver() {
