@@ -21,6 +21,8 @@ export class HabitosPage {
 	private itensHabito;
 	public  tempo;
 	private tempoController;
+	private quantidadeMovimentos = 0;
+	private finalizado = false;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController, public http: HttpClient, public services: ServiceComponent) {
   	        new Promise(resolve => {
@@ -68,6 +70,7 @@ export class HabitosPage {
   		item.selected = false;
   		item.indice   = null;
   	} else {
+		this.quantidadeMovimentos++;
   		let indiceAtual = 0;
 
   		for (let i = this.itensHabito.length - 1; i >= 0; i--) {
@@ -79,30 +82,39 @@ export class HabitosPage {
 
   		item.indice   = indiceAtual + 1;
   		item.selected = true;
-
-  		if (this.gameFinalizado()) {
-  			this.gameOver();
-  		}
   	}
   }
 
   private gameFinalizado() {
+	if (this.finalizado) return;
 	for (let i = this.itensHabito.length - 1; i >= 0; i--) {
-		if (this.itensHabito[i].indiceCorreto != this.itensHabito[i].indice) {
+		if (!this.itensHabito[i].selected) {
 			return false;
 		}
 	}
 
-  	return true;
+	this.gameOver();
   }
 
   private gameOver() {
+	this.finalizado = true;
   	clearInterval(this.tempoController);
 
   	let tempoMedio = Math.round(this.tempo/this.itensHabito.length);
 
+	let qtdAcertos = 0;
+	for (let i = this.itensHabito.length - 1; i >= 0; i--) {
+		if (this.itensHabito[i].indiceCorreto == this.itensHabito[i].indice) {
+			qtdAcertos++;
+		}
+	}
+
 	let url = this.services.getConfigs().url + 'game-3/setScore.php?tempo=' + this.tempo +
-																	'&velocidade_media=' + tempoMedio;
+												'&velocidade_media=' + tempoMedio +
+												'&quantidadeMovimentos=' + this.quantidadeMovimentos +
+												'&quantidadeAcertos=' + qtdAcertos +
+												'&quantidadeFalhas=' + (this.itensHabito.length - qtdAcertos) +
+												'&eficiencia=' + ((qtdAcertos/this.itensHabito.length)*100);
 	new Promise(resolve => {
 		this.http.get(url).subscribe((retorno: RetornoSetScore) => {
 		}, err => {
@@ -112,7 +124,8 @@ export class HabitosPage {
 	const alert = this.alertCtrl.create({
 		title: 'Tempo esgotado!',
 		subTitle: `Tempo gasto: ${this.tempo} segundos!\n
-		Velocidade média: ${tempoMedio} seg/item.`,
+		Velocidade média: ${tempoMedio} seg/item.\n
+		Eficiência: ${((qtdAcertos/this.itensHabito.length)*100)}%.`,
 		buttons: ['OK']
 	});
 

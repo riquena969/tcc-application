@@ -18,14 +18,12 @@
 	<ion-list>
 		<button ion-item *ngFor="let item of itensHabito" (click)="itemSelecionado(item)">
 			{{ item.nome }}
-			<ion-badge item-end *ngIf="item.selected && item.indice == item.indiceCorreto">
-				{{ item.indice }}
-			</ion-badge>
-			<ion-badge item-end *ngIf="item.selected && item.indice != item.indiceCorreto" color="danger">
+			<ion-badge item-end *ngIf="item.selected">
 				{{ item.indice }}
 			</ion-badge>
 		</button>
 	</ion-list>
+	<button ion-button block (click)="gameFinalizado()">Submeter</button>
 </ion-content>
 
 <ion-footer>
