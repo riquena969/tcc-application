@@ -21,8 +21,7 @@ import { LabirintoPage } from '../labirinto/labirinto';
 export class TutorialPage {
 
   public pages = [CartasPage, LabirintoPage, HabitosPage, PalavrasPage];
-  // public game  = Math.floor(Math.random() * this.pages.length);
-  public game = 0;
+  public game  = Math.floor(Math.random() * this.pages.length);
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
   }
