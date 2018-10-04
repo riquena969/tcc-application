@@ -161,7 +161,7 @@ export class CartasPage {
     alert.present();
 
     alert.onDidDismiss(() => {
-        this.navCtrl.popToRoot();
+      this.navCtrl.popToRoot();
     });
   }
 

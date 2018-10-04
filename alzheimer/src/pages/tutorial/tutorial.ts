@@ -22,7 +22,7 @@ export class TutorialPage {
 
   public pages = [CartasPage, LabirintoPage, HabitosPage, PalavrasPage];
   // public game  = Math.floor(Math.random() * this.pages.length);
-  public game = 3;
+  public game = 0;
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
   }
