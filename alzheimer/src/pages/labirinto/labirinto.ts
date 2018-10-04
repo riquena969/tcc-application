@@ -48,11 +48,13 @@ export class LabirintoPage {
         let colunaPerigo = 0;
         let linhaPerigo = 0;
         for (var i = 0; i < colunas - 1; ++i) {
-            colunaPerigo = Math.floor((Math.random() * colunas));
-            linhaPerigo = Math.floor((Math.random() * linhas));
+            do {
+                colunaPerigo = Math.floor((Math.random() * colunas));
+                linhaPerigo = Math.floor((Math.random() * linhas));
+            } while ((colunaPerigo == 0 && linhaPerigo == 0) ||
+                     (colunaPerigo == colunas && linhaPerigo == linhas));
 
             this.rows[linhaPerigo][colunaPerigo].danger = true;
-            console.log(this.rows[linhaPerigo][colunaPerigo].danger);
         }
 
         this.rows[linhas - 1][colunas - 1].end = true;
@@ -122,10 +124,6 @@ export class LabirintoPage {
             position: 'bottom'
         });
 
-        toast.onDidDismiss(() => {
-            console.log('Dismissed toast');
-        });
-
         toast.present();
     }
 
@@ -142,9 +140,11 @@ export class LabirintoPage {
             }
         }
 
+        let eficiencia = erros > 0 ? 0 : ((100/this.quantidadeTentativas)*(this.rows.length + this.rows[0].length - 2));
+
         let url = this.services.getConfigs().url + 'game-2/setScore.php?tempo=' + this.timer +
                                                                        '&velocidade_media=' + tempoMedio +
-                                                                       '&eficiencia=' + (100 - ((erros/this.tentativas.length) * 100)) +
+                                                                       '&eficiencia=' + eficiencia +
                                                                        '&cliques=' + this.quantidadeTentativas +
                                                                        '&tamanho_caminho=' + this.tentativas.length;
         new Promise(resolve => {
@@ -158,7 +158,7 @@ export class LabirintoPage {
             title: 'Tempo esgotado!',
             subTitle: `Tempo gasto: ${this.timer} segundos!\n
                        Velocidade média: ${tempoMedio} seg/item\n
-                       Eficiência: ${100 - ((erros/this.tentativas.length) * 100)}%`,
+                       Eficiência: ${eficiencia}%`,
             buttons: ['OK']
         });
 
